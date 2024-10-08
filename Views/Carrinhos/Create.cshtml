@@ -1,0 +1,35 @@
+@model TrabalhoASPNet.Models.Carrinho
+
+@{
+    ViewData["Title"] = "Adicionar ao carrinho";
+}
+
+<h1>Adicionar ao carrinho</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="LivroId" class="control-label"></label>
+        @Html.DropDownListFor(model => model.LivroId, (SelectList)ViewData["LivroId"], "Selecione um título", new { @class = "form-control" })
+        <span asp-validation-for="LivroId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Quantidade" class="control-label"></label>
+        <input asp-for="Quantidade" class="form-control" />
+        <span asp-validation-for="Quantidade" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Adicionar ao Carrinho</button>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Voltar à lista</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

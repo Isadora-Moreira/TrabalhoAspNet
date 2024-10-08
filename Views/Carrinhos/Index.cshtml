@@ -1,0 +1,62 @@
+@model IEnumerable<TrabalhoASPNet.Models.Carrinho>
+
+<h1>Carrinho de Compras</h1>
+
+@{
+    decimal total = 0;
+}
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Seu carrinho está vazio.
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Livro.Titulo)</th>
+            <th>@Html.DisplayNameFor(model => model.Quantidade)</th>
+            <th>Preço unitário</th>
+            <th>Subtotal por item</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            var subtotal = item.Livro.Preco * item.Quantidade; // Calculate the subtotal
+            total += subtotal; // Add the subtotal to the total
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Livro.Titulo)</td>
+                <td>@Html.DisplayFor(modelItem => item.Quantidade)</td>
+                <td>@Html.DisplayFor(modelItem => item.Livro.Preco)</td>
+                <td>@((item.Livro.Preco * item.Quantidade).ToString("C", new System.Globalization.CultureInfo("pt-BR"))) </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <h3>Total: @total.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</h3>
+
+    <form asp-action="SalvarCarrinho" method="post">
+        @foreach (var item in Model)
+        {
+            <input type="hidden" name="carrinhoIds" value="@item.Id" />
+        }
+        <button type="submit" class="btn btn-primary">Finalizar Compra</button>
+    </form>
+}
+
+<p>
+    <a asp-controller="Carrinhos" asp-action="Create" class="btn btn-success">Adicionar Novo Livro</a>
+</p>
+
+

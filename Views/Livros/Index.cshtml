@@ -1,0 +1,72 @@
+@model IEnumerable<TrabalhoASPNet.Models.Livro>
+
+@{
+ViewData["Title"] = "Index";
+}
+
+<h1>Livros</h1>
+
+<p>
+    <a asp-action="Create">Adicionar novo</a>
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Titulo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().AnoPublicacao)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Autor.Nome) <!-- Mostra o nome do autor -->
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Editora.Nome) <!-- Mostra o nome da editora -->
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Genero.Descricao) <!-- Mostra a descrição do gênero -->
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Preco)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().QuantidadeEmEstoque)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Titulo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AnoPublicacao)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Autor.Nome) <!-- Exibe o nome do autor -->
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Editora.Nome) <!-- Exibe o nome da editora -->
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Genero.Descricao) <!-- Exibe a descrição do gênero -->
+        </td>
+        <td>
+            R$ @(item.Preco.ToString("N2"))
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuantidadeEmEstoque)
+        </td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+            <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+            <a asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
+        </td>
+    </tr>
+    }
+    </tbody>
+</table>
